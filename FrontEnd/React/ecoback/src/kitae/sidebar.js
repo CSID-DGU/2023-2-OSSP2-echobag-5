@@ -5,16 +5,18 @@ import Icon from "awesome-react-icons";
 import { useNavigate } from 'react-router-dom';
 import closebutton from '../image/close1.png';
 
-import { FaUserEdit } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { MdOutlineEventAvailable } from "react-icons/md"
 import { FaCircleUser } from "react-icons/fa6";
+import { MdAddAPhoto } from "react-icons/md";
+import { FaShoppingBag } from "react-icons/fa";
+import { IoLogOut } from "react-icons/io5";
 
 import { FaBars } from "react-icons/fa";
 
 import '../css/Sidebar.css';
 
-import Logout from './logout';
+import {handleLogout} from './logout';
+
 const Sidebar=() => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const sidebarRef = useRef(); // 사이드바 요소에 대한 ref를 생성
@@ -65,8 +67,13 @@ const Sidebar=() => {
         <img src={closebutton} id='closebutton' onClick={() => setIsSidebarOpen(false)} ></img>
         <Navigation 
             onSelect={({ itemId }) => {
+                if (itemId === 'logout') {
+                handleLogout();
+              } else {
                 navigate(itemId);
+              }
             }}
+          
             // you can use your own router's api to get pathname
             
             items={[
@@ -77,63 +84,39 @@ const Sidebar=() => {
                 itemId: '/mypage',
                 elemBefore: () =><FaCircleUser />,
               },
-              // {
-              //   className:'sidebaritem',
-              //   title: '마이 페이지',
-              //   itemId: '/mypage',
-              //   elemBefore: () =><FaCircleUser />,
-              //   subNav: [
-              //     {
-              //       title: '프로필 편집',
-              //       itemId: '/editprofilepage',
-              //       elemBefore: () =><FaUserEdit />
-              //      },
-              //     {
-              //       title: 'Members',
-              //       itemId: '/management/members',
-              //     },
-              //   ],
-                
-              // },
               {
                 className:'sidebaritem',
                 title: '이벤트',
                 itemId: '/event',
-                // you can use your own custom Icon component as well
-                // icon is optional
+            
                 elemBefore: () => <MdOutlineEventAvailable />
+              },
+            
+              {
+                className:'sidebaritem',
+                title: '영수증 촬영',
+                itemId: '/receiptfilming',
+            
+                elemBefore: () => <MdAddAPhoto />
               },
               {
                 className:'sidebaritem',
-                title: '프로필 편집',
-                itemId: '/editprofilepage',
-                elemBefore: () =><FaUserEdit />
-                
+                title: '상점',
+                itemId: '/Store',
+            
+                elemBefore: () => <FaShoppingBag />
               },
-              // {
-              //   className:'sidebaritem',
-              //   title: '  ',
-              //   itemId: '/logout',
-              //   elemBefore: () => <Logout />,
-              // },
+              {
+                className:'sidebaritem',
+                title: '로그아웃',
+                itemId: 'logout',
+                elemBefore: () => <IoLogOut />
+              },
             ]}
           
           />
           <br></br>
-
-          {/* <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br>
-          <br></br> */}
-          <Logout />
+      
           
 
         </div>
